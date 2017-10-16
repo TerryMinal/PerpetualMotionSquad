@@ -3,6 +3,8 @@ Charles Weng
 SoftDev1 pd 7
 HW09 -- No Treble
 2017-10-16
+
+My hw was the simpler of the two and thus we used it to help keep clear what this script does
 '''
 import csv, sqlite3
 
