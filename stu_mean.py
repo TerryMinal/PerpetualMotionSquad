@@ -3,6 +3,8 @@ Perpetual Motion Squad - Terry Guan and Charles Weng
 SoftDev1 pd 7
 HW09 -- No Treble
 2017-10-16
+
+Be sure to run makeDB.py before this for the database
 '''
 import sqlite3
 
@@ -14,6 +16,7 @@ c = db.cursor()
 def print_listdic(dic):
     # loop through each key and print it out
     for student in dic:
+        # construct printing string
         x = student + ": ["
         for value in dic[student]:
             x += " " + str(value)
