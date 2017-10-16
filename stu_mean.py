@@ -10,13 +10,13 @@ import sqlite3
 db = sqlite3.connect("data.db")
 c = db.cursor()
 
-# neatly prints out the given dictionary of lists or regular dictionary respectively
+# helpers for neatly printing out the given dictionary of lists or regular dictionary respectively
 def print_listdic(dic):
     # loop through each key and print it out
     for student in dic:
         x = student + ": ["
-        for grade in dic[student]:
-            x += " " + str(grade)
+        for value in dic[student]:
+            x += " " + str(value)
         print x + " ]"
 def print_dic(dic):
     # loop through each key and print it out
@@ -40,12 +40,8 @@ def get_grades():
         grades[line[0]].append(line[1])
     return grades
 
-# print out each student's grades
-def print_grades():
-    print_listdic(get_grades())
-
 print "Grades:"
-print_grades()
+print_listdic(get_grades())
 
 # helper that returns the average value of a list of ints
 def average(x):
@@ -54,7 +50,7 @@ def average(x):
         sum += value
     return sum / len(x)
 
-# process grades into a dict averages for each student
+# process each student's grades into a dict of averages
 def get_averages():
     grades = get_grades()
     averages = {}
@@ -62,12 +58,8 @@ def get_averages():
         averages[student] = average(grades[student])
     return averages
 
-# print out each student's average
-def print_averages():
-    print_dic(get_averages())
+print "\nAverages:"
+print_dic(get_averages())
 
 def display():
     pass
-
-print "\nAverages:"
-print_averages
