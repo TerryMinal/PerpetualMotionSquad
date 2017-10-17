@@ -15,6 +15,7 @@ c = db.cursor()
 # add in the two tables
 c.execute("CREATE TABLE peeps (name TEXT, age INTEGER, id INTEGER PRIMARY KEY)")
 c.execute("CREATE TABLE courses (course TEXT, grade INTEGER, id INTEGER)")
+c.execute("CREATE TABLE peeps_avg (id INTEGER, average INTEGER)")
 
 # open the two files
 csv1  = csv.DictReader(open("peeps.csv"))
