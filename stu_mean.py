@@ -86,3 +86,5 @@ def display():
         print name + ", " + str(ID[name]) + ", " + str(avg[name])
     return
 display()
+#
+# UPDATE x SET name = "x" WHERE id = 0
