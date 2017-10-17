@@ -17,7 +17,8 @@ except:
 db = sqlite3.connect("data.db")
 c = db.cursor()
 
-
+updated = False 
+row_count = 0 
 # helpers for neatly printing out the given dictionary of lists or regular dictionary respectively
 def print_listdic(dic):
     # loop through each key and print it out
@@ -51,6 +52,7 @@ def get_grades():
     # process the data into a dictionary of lists
     grades = {}
     for line in x:
+        global row_count += 1
         # check if there is a list in grades for the student
         if line[0] not in grades:
             grades[line[0]] = []
@@ -85,6 +87,24 @@ def display():
     for name in ID.keys():
         print name + ", " + str(ID[name]) + ", " + str(avg[name])
     return
-display()
-#
-# UPDATE x SET name = "x" WHERE id = 0
+#display()
+
+def initialize_table_avg():
+    avg = get_averages()
+    ID = get_id()
+    for name in ID.keys():
+        x = "INSERT peeps_avg VALUES(" + str(ID[name]) +"," + str(avg[name]) + ")"
+        c.execute(x)
+    return
+
+ 
+def update_table_avg():
+    avg = get_averages()
+    ID = get_id()
+    for name in ID.keys():
+        x = "UPDATE peeps_avg SET average = " + avg[name] + "WHERE id = " + ID[name]
+        c.execute(x)
+    return
+
+def update_avg():
+    
