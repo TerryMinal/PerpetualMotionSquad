@@ -8,9 +8,15 @@ Be sure to run makeDB.py before this for the database
 '''
 import sqlite3
 
+try:
+    import makeDB
+except:
+    print "DB already created... moving on\n"
+
 # initialize database
 db = sqlite3.connect("data.db")
 c = db.cursor()
+
 
 # helpers for neatly printing out the given dictionary of lists or regular dictionary respectively
 def print_listdic(dic):
@@ -21,12 +27,21 @@ def print_listdic(dic):
         for value in dic[student]:
             x += " " + str(value)
         print x + " ]"
+
 def print_dic(dic):
     # loop through each key and print it out
     for student in dic:
         x = student + ": " + str(dic[student])
         print x
 
+#return a dictionary in the format {name: id}
+def get_id():
+    f = 'SELECT name, id FROM peeps'
+    x = c.execute(f)
+    ret_dict = {}
+    for line in x:
+        ret_dict[line[0]] = line[1]
+    return ret_dict
 
 # helper function that returns a dictionary int the format {<name>: [grade1, grade2 ...]}
 def get_grades():
@@ -43,8 +58,8 @@ def get_grades():
         grades[line[0]].append(line[1])
     return grades
 
-print "Grades:"
-print_listdic(get_grades())
+# print "Grades:"
+# print_listdic(get_grades())
 
 # helper that returns the average value of a list of ints
 def average(x):
@@ -53,7 +68,7 @@ def average(x):
         sum += value
     return sum / len(x)
 
-# process each student's grades into a dict of averages
+# process each student's grades into a dict of averages. {name: avg}
 def get_averages():
     grades = get_grades()
     averages = {}
@@ -61,8 +76,13 @@ def get_averages():
         averages[student] = average(grades[student])
     return averages
 
-print "\nAverages:"
-print_dic(get_averages())
+# print "\nAverages:"
+# print_dic(get_averages())
 
 def display():
-    pass
+    avg = get_averages()
+    ID = get_id()
+    for name in ID.keys():
+        print name + ", " + str(ID[name]) + ", " + str(avg[name])
+    return
+display()
