@@ -17,8 +17,6 @@ except:
 db = sqlite3.connect("data.db")
 c = db.cursor()
 
-updated = False 
-row_count = 0 
 # helpers for neatly printing out the given dictionary of lists or regular dictionary respectively
 def print_listdic(dic):
     # loop through each key and print it out
@@ -52,7 +50,6 @@ def get_grades():
     # process the data into a dictionary of lists
     grades = {}
     for line in x:
-        global row_count += 1
         # check if there is a list in grades for the student
         if line[0] not in grades:
             grades[line[0]] = []
@@ -93,18 +90,32 @@ def initialize_table_avg():
     avg = get_averages()
     ID = get_id()
     for name in ID.keys():
-        x = "INSERT peeps_avg VALUES(" + str(ID[name]) +"," + str(avg[name]) + ")"
+        x = "INSERT INTO peeps_avg VALUES(" + str(ID[name]) +"," + str(avg[name]) + ")"
         c.execute(x)
+    db.commit()
+    print "db peeps_avg intialized..."
     return
 
- 
+initialize_table_avg()
+
 def update_table_avg():
     avg = get_averages()
     ID = get_id()
     for name in ID.keys():
-        x = "UPDATE peeps_avg SET average = " + avg[name] + "WHERE id = " + ID[name]
+        x = "UPDATE peeps_avg SET average = " + str(avg[name]) + " WHERE id = " + str(ID[name])
         c.execute(x)
+    db.commit()
+    print "peeps_avg updated..."
     return
 
-def update_avg():
-    
+# update_table_avg()
+
+def add_row(course, avg, ID):
+    x = "INSERT INTO courses VALUES(" + "'" + course + "'" + "," + str(avg) + "," + str(ID) + ")"
+    print x
+    c.execute(x)
+    db.commit()
+    update_table_avg()
+    return
+
+add_row("softdev", 20, 1)
