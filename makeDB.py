@@ -12,10 +12,10 @@ import csv, sqlite3
 db = sqlite3.connect("data.db")
 c = db.cursor()
 
-# add in the two tables
+# add in the three tables PRIMARY KEY(id, course) makes the pair as the key
 c.execute("CREATE TABLE peeps (name TEXT, age INTEGER, id INTEGER PRIMARY KEY)")
-c.execute("CREATE TABLE courses (course TEXT, grade INTEGER, id INTEGER)")
-c.execute("CREATE TABLE peeps_avg (id INTEGER, average INTEGER)")
+c.execute("CREATE TABLE courses (course TEXT, grade INTEGER, id INTEGER, PRIMARY KEY(id, course))")
+c.execute("CREATE TABLE peeps_avg (id INTEGER PRIMARY KEY, average INTEGER)")
 
 # open the two files
 csv1  = csv.DictReader(open("peeps.csv"))
